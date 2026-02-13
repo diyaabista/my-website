@@ -1,0 +1,126 @@
+:root {
+    --primary: #6366f1;
+    --bg: #0f172a;
+    --glass: rgba(255, 255, 255, 0.04);
+    --text: #f8fafc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* HEADER */
+header {
+    padding: 25px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    background: rgba(0,0,0,0.4);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    font-weight: 600;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 10%;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+}
+
+.hero p {
+    opacity: 0.6;
+    letter-spacing: 3px;
+}
+
+/* PRODUCTS */
+.container {
+    padding: 40px 10%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.4s;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.img-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.price {
+    font-weight: 800;
+    color: var(--primary);
+    margin: 10px 0;
+}
+
+.btn {
+    background: white;
+    color: black;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 40px;
+    margin-top: 40px;
+    background: #000;
+    opacity: 0.7;
+}
