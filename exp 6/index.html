@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamic Form Example</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4e73df, #1cc88a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #formContainer {
+      background: white;
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 420px;
+      max-height: 95vh;
+      overflow-y: auto;
+    }
+
+    h3 {
+      margin-top: 15px;
+      color: #4e73df;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      transition: 0.3s;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #4e73df;
+      outline: none;
+      box-shadow: 0 0 5px rgba(78,115,223,0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4e73df;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #2e59d9;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .success {
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .other-box {
+      display: none;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="formContainer"></div>
+
+<script>
+  function loadForm() {
+    const formHTML = `
+      <form id="myForm">
+
+        <h3>User Information</h3>
+
+        <label>Full Name:</label>
+        <input type="text" id="fullName" placeholder="Enter name">
+        <div class="error" id="nameError"></div><br>
+
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="Enter email">
+        <div class="error" id="emailError"></div><br>
+
+        <label>Age:</label>
+        <input type="number" id="age" min="1">
+        <div class="error" id="ageError"></div><br>
+
+        <label>Address:</label>
+        <textarea id="address" rows="3"></textarea>
+        <div class="error" id="addressError"></div><br>
+
+        <h3>Preferences</h3>
+
+        <label>Select Your Hobbies:</label><br>
+
+        <input type="checkbox" name="hobby" value="sports"> Sports<br>
+        <input type="checkbox" name="hobby" value="music"> Music<br>
+        <input type="checkbox" name="hobby" value="reading"> Reading<br>
+        <input type="checkbox" name="hobby" value="traveling"> Traveling<br>
+        <input type="checkbox" name="hobby" value="gaming"> Gaming<br>
+        <input type="checkbox" name="hobby" value="cooking"> Cooking<br>
+        <input type="checkbox" name="hobby" value="photography"> Photography<br>
+        <input type="checkbox" name="hobby" value="dancing"> Dancing<br>
+        <input type="checkbox" name="hobby" value="other" id="otherHobby"> Other<br>
+
+        <div class="other-box" id="otherHobbyBox">
+          <input type="text" id="otherHobbyText" placeholder="Please specify">
+        </div>
+
+        <div class="error" id="hobbyError"></div><br>
+
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female
+        <input type="radio" name="gender" value="other"> Other<br>
+        <div class="error" id="genderError"></div><br>
+
+        <label>Country:</label>
+        <select id="country">
+          <option value="">Select</option>
+          <option value="nepal">Nepal</option>
+          <option value="india">India</option>
+          <option value="bangladesh">Bangladesh</option>
+          <option value="bhutan">Bhutan</option>
+          <option value="srilanka">Sri Lanka</option>
+          <option value="maldives">Maldives</option>
+          <option value="usa">USA</option>
+          <option value="uk">UK</option>
+          <option value="canada">Canada</option>
+          <option value="australia">Australia</option>
+          <option value="japan">Japan</option>
+          <option value="germany">Germany</option>
+          <option value="france">France</option>
+        </select>
+        <div class="error" id="countryError"></div><br>
+
+        <button type="submit">Submit</button>
+        <div class="success" id="successMessage"></div>
+
+      </form>
+    `;
+
+    document.getElementById("formContainer").innerHTML = formHTML;
+
+    document.getElementById("myForm").addEventListener("submit", validateForm);
+
+    // Show/hide Other hobby textbox
+    document.getElementById("otherHobby").addEventListener("change", function() {
+      document.getElementById("otherHobbyBox").style.display =
+        this.checked ? "block" : "none";
+    });
+  }
+
+  function validateForm(event) {
+    event.preventDefault();
+    let isValid = true;
+
+    document.querySelectorAll(".error").forEach(e => e.textContent = "");
+    document.getElementById("successMessage").textContent = "";
+
+    const name = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const age = document.getElementById("age").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const country = document.getElementById("country").value;
+    const hobbies = document.querySelectorAll("input[name='hobby']:checked");
+    const gender = document.querySelector("input[name='gender']:checked");
+    const otherChecked = document.getElementById("otherHobby").checked;
+    const otherText = document.getElementById("otherHobbyText").value.trim();
+
+    if (name === "") {
+      document.getElementById("nameError").textContent = "Name is required";
+      isValid = false;
+    }
+
+    if (email === "" || !email.includes("@")) {
+      document.getElementById("emailError").textContent = "Valid email required";
+      isValid = false;
+    }
+
+    if (age === "" || age <= 0) {
+      document.getElementById("ageError").textContent = "Valid age required";
+      isValid = false;
+    }
+
+    if (address === "") {
+      document.getElementById("addressError").textContent = "Address is required";
+      isValid = false;
+    }
+
+    if (hobbies.length === 0) {
+      document.getElementById("hobbyError").textContent = "Select at least one hobby";
+      isValid = false;
+    }
+
+    if (otherChecked && otherText === "") {
+      document.getElementById("hobbyError").textContent = "Please specify your other hobby";
+      isValid = false;
+    }
+
+    if (!gender) {
+      document.getElementById("genderError").textContent = "Select your gender";
+      isValid = false;
+    }
+
+    if (country === "") {
+      document.getElementById("countryError").textContent = "Select your country";
+      isValid = false;
+    }
+
+    if (isValid) {
+      document.getElementById("successMessage").textContent =
+        "Form submitted successfully!";
+      document.getElementById("myForm").reset();
+      document.getElementById("otherHobbyBox").style.display = "none";
+    }
+  }
+
+  loadForm();
+</script>
+
+</body>
+</html>
