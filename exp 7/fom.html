@@ -1,0 +1,340 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Advanced Student Form</title>
+
+<style>
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#667eea,#764ba2);
+margin:0;
+padding:20px;
+color:white;
+}
+
+h2{
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:rgba(255,255,255,0.1);
+padding:20px;
+border-radius:15px;
+backdrop-filter:blur(10px);
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+input[type="text"],
+input[type="number"],
+select{
+width:100%;
+padding:8px;
+margin:5px 0;
+border-radius:6px;
+border:none;
+}
+
+.gender-box{
+margin:10px 0;
+}
+
+.gender-box label{
+margin-right:15px;
+cursor:pointer;
+}
+
+.gender-box input[type="radio"]{
+width:auto;
+margin-right:5px;
+}
+
+.btn{
+padding:8px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin:5px 3px;
+font-weight:bold;
+}
+
+.primary{background:#00c9a7;color:white;}
+.danger{background:#ff4b5c;color:white;}
+.warning{background:#ffc107;color:black;}
+.info{background:#17a2b8;color:white;}
+
+.btn:hover{
+opacity:0.85;
+transform:scale(1.05);
+}
+
+table{
+width:100%;
+margin-top:15px;
+border-collapse:collapse;
+background:white;
+color:black;
+border-radius:10px;
+overflow:hidden;
+}
+
+th,td{
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#333;
+color:white;
+}
+
+tr:nth-child(even){
+background:#f2f2f2;
+}
+
+tr:hover{
+background:#d1e7ff;
+}
+
+.top-controls{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+}
+
+.search-box{
+width:200px;
+padding:6px;
+border-radius:6px;
+border:none;
+}
+
+@media(max-width:600px){
+.top-controls{
+flex-direction:column;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>✨ Advanced Student Registration System ✨</h2>
+
+<div class="container">
+
+<form id="myForm">
+
+<input type="hidden" id="editIndex">
+
+<input type="text" id="name" placeholder="Enter Name" required>
+
+<input type="number" id="age" placeholder="Enter Age" required>
+
+<div class="gender-box">
+<label>Gender:</label><br>
+
+<label>
+<input type="radio" name="gender" value="Male" required> Male
+</label>
+
+<label>
+<input type="radio" name="gender" value="Female" required> Female
+</label>
+
+</div>
+
+<select id="course">
+<option value="BCA">BCA</option>
+<option value="BTech">BTech</option>
+<option value="MCA">MCA</option>
+</select>
+
+<button class="btn primary" type="submit">Save</button>
+
+</form>
+
+<div class="top-controls">
+
+<div>
+<button class="btn info" onclick="copyTable()">Copy</button>
+<button class="btn warning" onclick="downloadCSV()">Download</button>
+<button class="btn danger" onclick="clearAll()">Clear All</button>
+</div>
+
+<input type="text" class="search-box" id="search" placeholder="Search..." onkeyup="searchData()">
+
+</div>
+
+<table id="dataTable">
+
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Age</th>
+<th>Gender</th>
+<th>Course</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+let dataArray = JSON.parse(localStorage.getItem("students")) || [];
+
+function saveToLocal(){
+localStorage.setItem("students",JSON.stringify(dataArray));
+}
+
+document.getElementById("myForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=document.getElementById("name").value;
+let age=document.getElementById("age").value;
+let course=document.getElementById("course").value;
+let gender=document.querySelector('input[name="gender"]:checked');
+let editIndex=document.getElementById("editIndex").value;
+
+if(!gender){
+alert("Select Gender");
+return;
+}
+
+let student={
+name:name,
+age:age,
+gender:gender.value,
+course:course
+};
+
+if(editIndex===""){
+dataArray.push(student);
+}
+else{
+dataArray[editIndex]=student;
+document.getElementById("editIndex").value="";
+}
+
+saveToLocal();
+updateTable();
+this.reset();
+
+});
+
+function updateTable(){
+
+let tbody=document.querySelector("#dataTable tbody");
+tbody.innerHTML="";
+
+dataArray.forEach(function(data,index){
+
+tbody.innerHTML+=`
+<tr>
+<td>${index+1}</td>
+<td>${data.name}</td>
+<td>${data.age}</td>
+<td>${data.gender}</td>
+<td>${data.course}</td>
+<td>
+<button class="btn warning" onclick="editData(${index})">Edit</button>
+<button class="btn danger" onclick="deleteData(${index})">Delete</button>
+</td>
+</tr>
+`;
+
+});
+
+}
+
+function editData(index){
+
+let student=dataArray[index];
+
+document.getElementById("name").value=student.name;
+document.getElementById("age").value=student.age;
+document.querySelector('input[name="gender"][value="'+student.gender+'"]').checked=true;
+document.getElementById("course").value=student.course;
+document.getElementById("editIndex").value=index;
+
+}
+
+function deleteData(index){
+
+if(confirm("Are you sure?")){
+dataArray.splice(index,1);
+saveToLocal();
+updateTable();
+}
+
+}
+
+function clearAll(){
+
+if(confirm("Delete all records?")){
+dataArray=[];
+saveToLocal();
+updateTable();
+}
+
+}
+
+function copyTable(){
+
+let text="Name\tAge\tGender\tCourse\n";
+
+dataArray.forEach(function(d){
+text+=d.name+"\t"+d.age+"\t"+d.gender+"\t"+d.course+"\n";
+});
+
+navigator.clipboard.writeText(text);
+alert("Copied!");
+
+}
+
+function downloadCSV(){
+
+let csv="Name,Age,Gender,Course\n";
+
+dataArray.forEach(function(d){
+csv+=d.name+","+d.age+","+d.gender+","+d.course+"\n";
+});
+
+let blob=new Blob([csv],{type:"text/csv"});
+let link=document.createElement("a");
+
+link.href=URL.createObjectURL(blob);
+link.download="students.csv";
+link.click();
+
+}
+
+function searchData(){
+
+let filter=document.getElementById("search").value.toLowerCase();
+let rows=document.querySelectorAll("#dataTable tbody tr");
+
+rows.forEach(function(row){
+row.style.display=row.innerText.toLowerCase().includes(filter)?"":"none";
+});
+
+}
+
+updateTable();
+
+</script>
+
+</body>
+</html>
+```
