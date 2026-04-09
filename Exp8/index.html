@@ -5,85 +5,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Experiment 8: Introduction to PHP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>PHP Lab</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-        <header class="header-card">
-            <h1>Introduction to PHP</h1>
-            <p>Experiment 8</p>
+        <nav class="nav-menu">
+            <a href="#objective" class="nav-link active" data-section="objective">
+                <i class="fas fa-bullseye"></i>
+                <span>Objective</span>
+            </a>
+            <a href="#procedure" class="nav-link" data-section="procedure">
+                <i class="fas fa-list-ol"></i>
+                <span>Procedure</span>
+            </a>
+            <a href="#conclusion" class="nav-link" data-section="conclusion">
+                <i class="fas fa-check-circle"></i>
+                <span>Conclusion</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Exp. 8</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">Introduction to PHP</h1>
+                <p class="subtitle">XAMPP Setup & Basics</p>
+            </div>
+            <div class="header-accent"></div>
         </header>
 
-        <section class="card">
-            <h2>Objective</h2>
-            <p>To install PHP using XAMPP and understand basic PHP concepts such as variables, output functions and
-                executing through a local server.</p>
-        </section>
+        <div class="content-wrapper">
+            <!-- Objective Section -->
+            <section id="objective" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-bullseye"></i> Objective</h2>
+                </div>
+                <div class="section-content">
+                    <p>To install PHP using XAMPP and understand basic PHP concepts such as variables, output functions and executing through a local server.</p>
+                </div>
+            </section>
 
-        <section class="card">
-            <h2>Procedure</h2>
+            <!-- Procedure Section -->
+            <section id="procedure" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list-ol"></i> Procedure</h2>
+                </div>
+                <div class="procedure-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Install XAMPP</h3>
+                        <p>Install XAMPP on your system.</p>
+                        <img src="Screenshot 2026-04-05 144409.jpg" alt="Install XAMPP" class="step-image">
+                    </div>
 
-            <div class="step">
-                <div class="step-header">
-                    <div class="step-number">1</div>
-                    <div class="step-text">Install XAMPP on your system.</div>
-                </div>
-                <div class="img-container">
-                    <img src="Screenshot 2026-04-05 144409.jpg" alt="Install XAMPP">
-                </div>
-            </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Start Servers</h3>
+                        <p>Start Apache and MySQL servers.</p>
+                        <img src="Screenshot 2026-04-05 151041.jpg" alt="Start XAMPP" class="step-image">
+                    </div>
 
-            <div class="step">
-                <div class="step-header">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Start Apache and MySQL servers.</div>
-                </div>
-                <div class="img-container">
-                    <img src="Screenshot 2026-04-05 151041.jpg" alt="Start XAMPP">
-                </div>
-            </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Create PHP File</h3>
+                        <p>Create a PHP file in the htdocs folder.</p>
+                        <img src="Screenshot 2026-04-05 151017.jpg" alt="Create PHP file" class="step-image">
+                    </div>
 
-            <div class="step">
-                <div class="step-header">
-                    <div class="step-number">3</div>
-                    <div class="step-text">Create a PHP file in the htdocs folder.</div>
-                </div>
-                <div class="img-container">
-                    <img src="Screenshot 2026-04-05 151017.jpg" alt="Create PHP file">
-                </div>
-            </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3>Write PHP Code</h3>
+                        <p>Write PHP code in the file.</p>
+                        <img src="Screenshot 2026-04-05 151000.jpg" alt="PHP code" class="step-image">
+                    </div>
 
-            <div class="step">
-                <div class="step-header">
-                    <div class="step-number">4</div>
-                    <div class="step-text">Write PHP code in the file.</div>
+                    <div class="step-card">
+                        <div class="step-number">5</div>
+                        <h3>View Output</h3>
+                        <p>Open the file in a web browser.</p>
+                        <img src="helloworldimage.jpg" alt="PHP output" class="step-image">
+                    </div>
                 </div>
-                <div class="img-container">
-                    <img src="Screenshot 2026-04-05 151000.jpg" alt="PHP code">
-                </div>
-            </div>
+            </section>
 
-            <div class="step">
-                <div class="step-header">
-                    <div class="step-number">5</div>
-                    <div class="step-text">Open the file in a web browser.</div>
+            <!-- Conclusion Section -->
+            <section id="conclusion" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-check-circle"></i> Conclusion</h2>
                 </div>
-                <div class="img-container">
-                    <img src="helloworldimage.jpg" alt="PHP output">
+                <div class="conclusion-box">
+                    <div class="success-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <p>I have successfully installed XAMPP and executed a PHP file in a web browser.</p>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
+    </main>
 
-        <section class="card">
-            <h2>Conclusion</h2>
-            <div class="conclusion-box">
-                <p>I have successfully installed XAMPP and executed a PHP file in a web browser.</p>
-            </div>
-        </section>
+    <script>
+        // Sidebar menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
 
-    </div>
+        // Active link highlighting
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', function() {
+            let current = '';
+            document.querySelectorAll('.content-section').forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('data-section') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
